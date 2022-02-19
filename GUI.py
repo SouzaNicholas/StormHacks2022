@@ -116,7 +116,7 @@ class EntryWindow(QMainWindow):
     # Pushes log entry to database and clears fields
     def submit(self):
         # TODO: SQLite Insert command
-
+        #
         self.action_field.clear()
         self.cause_field.clear()
 

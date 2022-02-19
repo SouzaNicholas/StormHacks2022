@@ -13,6 +13,17 @@ def close_db(conn: sql.Connection):
     conn.close()
 
 
+# submits entry into database, entry must be converted to tuple before passing into function
+def submit_entry(entry: tuple):
+    db = open_db()
+    conn = db[0]
+    curs = db[1]
+
+    curs.execute("""INSERT INTO logs VALUES (NULL, ?, ?, ?, ?);""", entry)
+
+    close_db(conn)
+
+
 # All keywords have "log_" in front of them to differentiate
 def init_logs_table(curs: sql.Cursor):
     curs.execute("""CREATE TABLE IF NOT EXISTS logs(
