@@ -1,17 +1,26 @@
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit, QInputDialog
 import DB
+from os.path import exists
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
         self.setWindowTitle("Your Health Journal")
         self.setGeometry(0, 0, 600, 200)
         self.setFixedSize(600, 200)
 
+        file_exists = exists("name.txt")
+        if not file_exists:
+            self.change_name_win()
+
+        self.username = open("name.txt", "r")
+        self.name_string = self.username.readline()
+
         self.welcome = QLabel(self)
-        self.welcome.setText("Hello, (Username)! Welcome back to your health journal!")
+        self.welcome.setText("Hello, " + self.name_string + "! Welcome back to your health journal!")
         self.welcome.resize(400, 50)
         self.welcome.move(100, 25)
 
@@ -27,6 +36,12 @@ class MainWindow(QMainWindow):
         self.check_logs.move(400, 120)
         self.check_logs.clicked.connect(self.new_log_win)
 
+        self.change_name = QPushButton(self)
+        self.change_name.setText("Change Name")
+        self.change_name.resize(150, 50)
+        self.change_name.move(225, 120)
+        self.change_name.clicked.connect(self.change_name_win)
+
         self.show()
 
     def new_entry_win(self):
@@ -36,6 +51,14 @@ class MainWindow(QMainWindow):
     def new_log_win(self):
         self.popup = LogWindow()
         self.popup.show()
+
+    def change_name_win(self):
+        self.window = QInputDialog()
+        name, ok = self.window.getText(self, "Change Name", "Enter your name")
+        if ok and name:
+            name_file = open("name.txt", "w+")
+            name_file.write(name)
+            name_file.close()
 
 
 class EntryWindow(QMainWindow):
