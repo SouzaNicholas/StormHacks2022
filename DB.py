@@ -13,6 +13,17 @@ def close_db(conn: sql.Connection):
     conn.close()
 
 
+# submits entry into database, entry must be converted to tuple before passing into function
+def submit_entry(entry: tuple):
+    db = open_db()
+    conn = db[0]
+    curs = db[1]
+
+    curs.execute("""INSERT INTO logs VALUES (NULL, ?, ?, ?, ?);""", entry)
+
+    close_db(conn)
+
+
 # All keywords have "log_" in front of them to differentiate
 def init_logs_table(curs: sql.Cursor):
     curs.execute("""CREATE TABLE IF NOT EXISTS logs(
@@ -29,12 +40,13 @@ def init_logs_table(curs: sql.Cursor):
 # the block after is my attempt to fix it, it is not currently coherent.
 def query_db(terms: dict):
     db = open_db()
-    # db[1].execute("""SELECT log_date, emotion, log_action, cause FROM logs WHERE
-    #                     log_date LIKE (?) AND
-    #                     emotion LIKE (?) AND
-    #                     log_action LIKE (?) AND
-    #                     cause LIKE (?)""", (terms.values()))
-    r = db[1].execute("""SELECT log_date, emotion, log_action, cause FROM logs WHERE
-                        log_date LIKE ('%' || ? || '%');""", "A")
-    print(r.fetchall())
+    results = db[1].execute("""SELECT log_date, emotion, log_action, cause FROM logs WHERE
+                        log_date LIKE ? AND
+                        emotion LIKE ? AND
+                        log_action LIKE ? AND
+                        cause LIKE ?;""", ('%' + terms['Date'] + '%',
+                                           '%' + terms['Emotion'] + '%',
+                                           '%' + terms['Action'] + '%',
+                                           '%' + terms['Cause'] + '%'))
+    print(results.fetchall())
     close_db(db[0])
