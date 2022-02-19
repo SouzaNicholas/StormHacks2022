@@ -1,5 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit
+import DB
 
 
 class MainWindow(QMainWindow):
@@ -163,6 +164,9 @@ class LogWindow(QMainWindow):
     def submit(self):
         # TODO: perform SQLite call to fetch requested records
 
+        self.popup = ResultWindow(self.package_terms())
+        self.popup.show()
+
         self.date_field.clear()
         self.emotion_field.clear()
         self.action_field.clear()
@@ -171,4 +175,22 @@ class LogWindow(QMainWindow):
     # Closes window
     def exit(self):
         self.close()
+
+    def package_terms(self) -> dict:
+        terms = {
+            "Date": self.date_field.text(),
+            "Emotion": self.emotion_field.text(),
+            "Action": self.action_field.text(),
+            "Cause": self.cause_field.text()
+        }
+        return terms
+
+
+class ResultWindow(QMainWindow):
+    # Window needs to dynamically populate with entries from SQL database
+    def __init__(self, terms: dict):
+        super().__init__()
+        self.setWindowTitle("Results")
+        self.setGeometry(0, 0, 600, 500)
+        self.records = DB.query_db(terms)
 
