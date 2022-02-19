@@ -113,7 +113,7 @@ class EntryWindow(QMainWindow):
             raw = e.read()
         return raw.split(",")
 
-    # Pushed log entry to database and clears fields
+    # Pushes log entry to database and clears fields
     def submit(self):
         # TODO: SQLite Insert command
 
@@ -186,10 +186,12 @@ class LogWindow(QMainWindow):
     # Will open new window to show records
     def submit(self):
         # TODO: perform SQLite call to fetch requested records
+        records = DB.query_db(self.package_terms())
 
-        self.popup = ResultWindow(self.package_terms())
+        self.popup = ResultWindow(records)
         self.popup.show()
 
+        # Empties the fields once the data is used.
         self.date_field.clear()
         self.emotion_field.clear()
         self.action_field.clear()
@@ -199,6 +201,7 @@ class LogWindow(QMainWindow):
     def exit(self):
         self.close()
 
+    # Grabs user input from text fields and packs them into a dict
     def package_terms(self) -> dict:
         terms = {
             "Date": self.date_field.text(),
@@ -215,5 +218,4 @@ class ResultWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Results")
         self.setGeometry(0, 0, 600, 500)
-        self.records = DB.query_db(terms)
 
