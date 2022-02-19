@@ -1,5 +1,7 @@
+import PyQt5.QtCore
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit, \
+    QInputDialog, QWidget, QFormLayout, QGridLayout
 import DB
 from os.path import exists
 
@@ -209,11 +211,27 @@ class LogWindow(QMainWindow):
         return terms
 
 
-class ResultWindow(QMainWindow):
+class ResultWindow(QWidget):
     # Window needs to dynamically populate with entries from SQL database
     def __init__(self, terms: dict):
         super().__init__()
         self.setWindowTitle("Results")
         self.setGeometry(0, 0, 600, 500)
         self.records = DB.query_db(terms)
+        self.layout = QFormLayout()
 
+        self.date = QLabel(self)
+        self.emotion = QLabel(self)
+        self.cause = QLabel(self)
+        self.action = QLabel(self)
+
+        self.date.setText("2/19/2022")
+        self.emotion.setText("Placeholder Emotion")
+        self.cause.setText("Placeholder Cause")
+        self.action.setText("This will probably be a large paragraph")
+
+        self.layout.addRow(self.date, self.emotion)
+        self.layout.addRow(self.cause, self.action)
+
+        # necessary to apply the layout to the window
+        self.setLayout(self.layout)
