@@ -142,20 +142,20 @@ class EntryWindow(QMainWindow):
         self.emotions.resize(150, 30)
 
         self.action_prompt = QLabel(self)
-        self.action_prompt.setText("Describe your day here. Be sure to pay close attention to things that caused a"
+        self.action_prompt.setText("Describe your day here. Be sure to pay close attention\nto things that caused a"
                                    " reaction in you.")
         self.action_prompt.setFont(QFont('Helvetica', 15))
-        self.action_prompt.move(50, 55)
-        self.action_prompt.resize(550, 30)
+        self.action_prompt.move(50, 45)
+        self.action_prompt.resize(550, 60)
 
         self.action_field = QTextEdit(self)
-        self.action_field.move(50, 80)
+        self.action_field.move(50, 100)
         self.action_field.resize(500, 150)
 
         self.cause_prompt = QLabel(self)
         self.cause_prompt.setText("What do you think made you feel this way today?")
         self.cause_prompt.move(50, 250)
-        self.cause_prompt.resize(350, 30)
+        self.cause_prompt.resize(500, 30)
         self.cause_prompt.setFont(QFont('Helvetica', 15))
 
         self.cause_field = QTextEdit(self)
@@ -244,7 +244,7 @@ class LogWindow(QMainWindow):
         self.emotion_label.move(50, 120)
         self.emotion_label.resize(200, 30)
         self.emotion_label.setText("How you felt that day")
-        self.emotion_label.setFont(QFont('Helvetica', 20))
+        self.emotion_label.setFont(QFont('Helvetica', 15))
 
         self.emotion_field = QLineEdit(self)
         self.emotion_field.move(50, 150)
@@ -252,9 +252,9 @@ class LogWindow(QMainWindow):
 
         self.action_label = QLabel(self)
         self.action_label.move(50, 220)
-        self.action_label.resize(200, 30)
+        self.action_label.resize(500, 30)
         self.action_label.setText("Description of the day")
-        self.action_label.setFont(QFont('Helvetica', 20))
+        self.action_label.setFont(QFont('Helvetica', 15))
 
         self.action_field = QLineEdit(self)
         self.action_field.move(50, 250)
@@ -262,9 +262,9 @@ class LogWindow(QMainWindow):
 
         self.cause_label = QLabel(self)
         self.cause_label.move(50, 320)
-        self.cause_label.resize(200, 30)
+        self.cause_label.resize(500, 30)
         self.cause_label.setText("Things that made you feel that way")
-        self.cause_label.setFont(QFont('Helvetica', 20))
+        self.cause_label.setFont(QFont('Helvetica', 15))
 
         self.cause_field = QLineEdit(self)
         self.cause_field.move(50, 350)
