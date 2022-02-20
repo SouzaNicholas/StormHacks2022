@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         self.new_entry.clicked.connect(self.new_entry_win)
 
         self.check_logs = QPushButton(self)
-        self.check_logs.setText("Check Logs")
+        self.check_logs.setText("Search Journal")
         self.check_logs.resize(150, 50)
         self.check_logs.move(400, 400)
         self.check_logs.setFont(QFont('Times', 28))
@@ -108,7 +108,7 @@ class EntryWindow(QMainWindow):
     # Window does not show itself, must be done when instance is created.
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("New Log Entry")
+        self.setWindowTitle("New Journal Entry")
         self.setGeometry(0, 0, 600, 500)
         self.setFixedSize(600, 500)
 
@@ -142,20 +142,21 @@ class EntryWindow(QMainWindow):
         self.emotions.resize(150, 30)
 
         self.action_prompt = QLabel(self)
-        self.action_prompt.setText("What did you do today?")
+        self.action_prompt.setText("Describe your day here. Be sure to pay close attention to things that caused a"
+                                   " reaction in you.")
         self.action_prompt.setFont(QFont('Helvetica', 15))
         self.action_prompt.move(50, 55)
-        self.action_prompt.resize(250, 30)
+        self.action_prompt.resize(550, 30)
 
         self.action_field = QTextEdit(self)
         self.action_field.move(50, 80)
         self.action_field.resize(500, 150)
 
         self.cause_prompt = QLabel(self)
-        self.cause_prompt.setText("Why do you think you feel that way?")
+        self.cause_prompt.setText("What do you think made you feel this way today?")
+        self.cause_prompt.move(50, 250)
+        self.cause_prompt.resize(350, 30)
         self.cause_prompt.setFont(QFont('Helvetica', 15))
-        self.cause_prompt.move(50, 255)
-        self.cause_prompt.resize(250, 30)
 
         self.cause_field = QTextEdit(self)
         self.cause_field.move(50, 280)
@@ -164,7 +165,7 @@ class EntryWindow(QMainWindow):
         self.submit_button = QPushButton(self)
         self.submit_button.move(100, 440)
         self.submit_button.resize(100, 50)
-        self.submit_button.setText("Submit")
+        self.submit_button.setText("Save Journal Entry")
         self.submit_button.setFont(QFont('Times', 22))
         self.submit_button.setStyleSheet("background-color : pink")
         self.submit_button.clicked.connect(self.submit)
@@ -202,7 +203,7 @@ class LogWindow(QMainWindow):
     # Window does not show itself, must be done when instance is created.
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Log Search")
+        self.setWindowTitle("Journal Search")
         self.setGeometry(0, 0, 600, 500)
         self.setFixedSize(600, 500)
 
@@ -240,9 +241,9 @@ class LogWindow(QMainWindow):
         self.date_field.resize(500, 30)
 
         self.emotion_label = QLabel(self)
-        self.emotion_label.move(50, 125)
-        self.emotion_label.resize(100, 30)
-        self.emotion_label.setText("Emotion")
+        self.emotion_label.move(50, 120)
+        self.emotion_label.resize(200, 30)
+        self.emotion_label.setText("How you felt that day")
         self.emotion_label.setFont(QFont('Helvetica', 20))
 
         self.emotion_field = QLineEdit(self)
@@ -250,9 +251,9 @@ class LogWindow(QMainWindow):
         self.emotion_field.resize(500, 30)
 
         self.action_label = QLabel(self)
-        self.action_label.move(50, 225)
-        self.action_label.resize(100, 30)
-        self.action_label.setText("Action")
+        self.action_label.move(50, 220)
+        self.action_label.resize(200, 30)
+        self.action_label.setText("Description of the day")
         self.action_label.setFont(QFont('Helvetica', 20))
 
         self.action_field = QLineEdit(self)
@@ -261,8 +262,8 @@ class LogWindow(QMainWindow):
 
         self.cause_label = QLabel(self)
         self.cause_label.move(50, 320)
-        self.cause_label.resize(100, 35)
-        self.cause_label.setText("Cause")
+        self.cause_label.resize(200, 30)
+        self.cause_label.setText("Things that made you feel that way")
         self.cause_label.setFont(QFont('Helvetica', 20))
 
         self.cause_field = QLineEdit(self)
@@ -317,7 +318,7 @@ class ResultWindow(QWidget):
         self.close()
     def __init__(self, terms: dict):
         super().__init__()
-        self.setWindowTitle("Results")
+        self.setWindowTitle("Journal Entries")
         self.setGeometry(0, 0, 600, 500)
         self.records = DB.query_db(terms)
         self.layout = QFormLayout()
@@ -356,6 +357,7 @@ class ResultWindow(QWidget):
             self.emotion = QLabel(self)
             self.cause = QLabel(self)
             self.action = QLabel(self)
+            blank = QLabel("__________________________")
 
             self.date.setText('Date: '+ row[0])
             self.date.setFont(QFont('Helvetica', 14))
@@ -367,8 +369,8 @@ class ResultWindow(QWidget):
             self.action.setFont(QFont('Helvetica', 12))
 
             self.layout.addRow(self.date, self.emotion)
-            self.layout.addRow(self.cause)
-            self.layout.addRow(self.action)
+            self.layout.addRow(self.cause, self.action)
+            self.layout.addRow(blank)
 
         # necessary to apply the layout to the window
         self.setLayout(self.layout)
