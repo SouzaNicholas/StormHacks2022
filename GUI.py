@@ -62,24 +62,24 @@ class MainWindow(QMainWindow):
         self.new_entry.setText("New Entry")
         self.new_entry.resize(150, 50)
         self.new_entry.move(50, 400)
-        self.new_entry.setFont(QFont('Times', 18))
-        self.new_entry.setStyleSheet("background-color : cyan")
+        self.new_entry.setFont(QFont('Times', 28))
+        self.new_entry.setStyleSheet("background-color : pink")
         self.new_entry.clicked.connect(self.new_entry_win)
 
         self.check_logs = QPushButton(self)
         self.check_logs.setText("Check Logs")
         self.check_logs.resize(150, 50)
         self.check_logs.move(400, 400)
-        self.check_logs.setFont(QFont('Times', 18))
-        self.check_logs.setStyleSheet("background-color : cyan")
+        self.check_logs.setFont(QFont('Times', 28))
+        self.check_logs.setStyleSheet("background-color : pink")
         self.check_logs.clicked.connect(self.new_log_win)
 
         self.change_name = QPushButton(self)
         self.change_name.setText("Change Name")
         self.change_name.resize(150, 50)
         self.change_name.move(225, 400)
-        self.change_name.setFont(QFont('Times', 18))
-        self.change_name.setStyleSheet("background-color : cyan")
+        self.change_name.setFont(QFont('Times', 24))
+        self.change_name.setStyleSheet("background-color : pink")
         self.change_name.clicked.connect(self.change_name_win)
 
         self.show()
@@ -112,6 +112,29 @@ class EntryWindow(QMainWindow):
         self.setGeometry(0, 0, 600, 500)
         self.setFixedSize(600, 500)
 
+        self.blue = QLabel(self)
+        # loading image
+        self.pixmap2 = QPixmap('blue.png')
+
+        # adding image to label
+        self.blue.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue.resize(self.pixmap2.width(),
+                         self.pixmap2.height())
+        self.blue.move(0, 50)
+
+        self.blue2 = QLabel(self)
+        # loading image
+
+        # adding image to label
+        self.blue2.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue2.resize(self.pixmap2.width(),
+                         self.pixmap2.height())
+        self.blue2.move(0, -250)
+
         self.emotions = QComboBox(self)
         for i in self.fetch_emotions():
             self.emotions.addItem(i)
@@ -120,7 +143,8 @@ class EntryWindow(QMainWindow):
 
         self.action_prompt = QLabel(self)
         self.action_prompt.setText("What did you do today?")
-        self.action_prompt.move(50, 50)
+        self.action_prompt.setFont(QFont('Helvetica', 15))
+        self.action_prompt.move(50, 55)
         self.action_prompt.resize(250, 30)
 
         self.action_field = QTextEdit(self)
@@ -129,7 +153,8 @@ class EntryWindow(QMainWindow):
 
         self.cause_prompt = QLabel(self)
         self.cause_prompt.setText("Why do you think you feel that way?")
-        self.cause_prompt.move(50, 250)
+        self.cause_prompt.setFont(QFont('Helvetica', 15))
+        self.cause_prompt.move(50, 255)
         self.cause_prompt.resize(250, 30)
 
         self.cause_field = QTextEdit(self)
@@ -137,15 +162,19 @@ class EntryWindow(QMainWindow):
         self.cause_field.resize(500, 150)
 
         self.submit_button = QPushButton(self)
-        self.submit_button.move(100, 435)
+        self.submit_button.move(100, 440)
         self.submit_button.resize(100, 50)
         self.submit_button.setText("Submit")
+        self.submit_button.setFont(QFont('Times', 22))
+        self.submit_button.setStyleSheet("background-color : pink")
         self.submit_button.clicked.connect(self.submit)
 
         self.cancel_button = QPushButton(self)
-        self.cancel_button.move(400, 435)
+        self.cancel_button.move(400, 440)
         self.cancel_button.resize(100, 50)
         self.cancel_button.setText("Cancel")
+        self.cancel_button.setFont(QFont('Times', 22))
+        self.cancel_button.setStyleSheet("background-color : pink")
         self.cancel_button.clicked.connect(self.exit)
 
     # Reads from file to avoid messy plaintext. File is short enough to not complicate time complexity
@@ -177,28 +206,54 @@ class LogWindow(QMainWindow):
         self.setGeometry(0, 0, 600, 500)
         self.setFixedSize(600, 500)
 
+        self.blue = QLabel(self)
+        # loading image
+        self.pixmap2 = QPixmap('blue.png')
+
+        # adding image to label
+        self.blue.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue.resize(self.pixmap2.width(),
+                         self.pixmap2.height())
+        self.blue.move(0, 50)
+
+        self.blue2 = QLabel(self)
+        # loading image
+
+        # adding image to label
+        self.blue2.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue2.resize(self.pixmap2.width(),
+                          self.pixmap2.height())
+        self.blue2.move(0, -250)
+
         self.date_label = QLabel(self)
         self.date_label.move(50, 20)
-        self.date_label.resize(100, 30)
+        self.date_label.resize(100, 35)
         self.date_label.setText("Date")
+        self.date_label.setFont(QFont('Helvetica', 20))
 
         self.date_field = QLineEdit(self)
         self.date_field.move(50, 50)
         self.date_field.resize(500, 30)
 
         self.emotion_label = QLabel(self)
-        self.emotion_label.move(50, 120)
+        self.emotion_label.move(50, 125)
         self.emotion_label.resize(100, 30)
         self.emotion_label.setText("Emotion")
+        self.emotion_label.setFont(QFont('Helvetica', 20))
 
         self.emotion_field = QLineEdit(self)
         self.emotion_field.move(50, 150)
         self.emotion_field.resize(500, 30)
 
         self.action_label = QLabel(self)
-        self.action_label.move(50, 220)
+        self.action_label.move(50, 225)
         self.action_label.resize(100, 30)
         self.action_label.setText("Action")
+        self.action_label.setFont(QFont('Helvetica', 20))
 
         self.action_field = QLineEdit(self)
         self.action_field.move(50, 250)
@@ -206,8 +261,9 @@ class LogWindow(QMainWindow):
 
         self.cause_label = QLabel(self)
         self.cause_label.move(50, 320)
-        self.cause_label.resize(100, 30)
+        self.cause_label.resize(100, 35)
         self.cause_label.setText("Cause")
+        self.cause_label.setFont(QFont('Helvetica', 20))
 
         self.cause_field = QLineEdit(self)
         self.cause_field.move(50, 350)
@@ -259,6 +315,28 @@ class ResultWindow(QWidget):
         self.setGeometry(0, 0, 600, 500)
         self.records = DB.query_db(terms)
         self.layout = QFormLayout()
+        self.blue = QLabel(self)
+        # loading image
+        self.pixmap2 = QPixmap('blue.png')
+
+        # adding image to label
+        self.blue.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue.resize(self.pixmap2.width(),
+                         self.pixmap2.height())
+        self.blue.move(0, 50)
+
+        self.blue2 = QLabel(self)
+        # loading image
+
+        # adding image to label
+        self.blue2.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue2.resize(self.pixmap2.width(),
+                          self.pixmap2.height())
+        self.blue2.move(0, -250)
 
         for row in self.records:
             self.date = QLabel(self)
@@ -266,13 +344,18 @@ class ResultWindow(QWidget):
             self.cause = QLabel(self)
             self.action = QLabel(self)
 
-            self.date.setText(row[0])
-            self.emotion.setText(row[1])
-            self.cause.setText(row[2])
-            self.action.setText(row[3])
+            self.date.setText('Date: '+ row[0])
+            self.date.setFont(QFont('Helvetica', 14))
+            self.emotion.setText('Emotion: '+row[1])
+            self.emotion.setFont(QFont('Helvetica', 14))
+            self.cause.setText('Cause: '+row[2])
+            self.cause.setFont(QFont('Helvetica', 12))
+            self.action.setText('Action: '+row[3])
+            self.action.setFont(QFont('Helvetica', 12))
 
             self.layout.addRow(self.date, self.emotion)
-            self.layout.addRow(self.cause, self.action)
+            self.layout.addRow(self.cause)
+            self.layout.addRow(self.action)
 
         # necessary to apply the layout to the window
         self.setLayout(self.layout)
