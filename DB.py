@@ -26,9 +26,9 @@ def init_logs_table(curs: sql.Cursor):
 
 def query_db(terms: dict):
     db = open_db()
-    # db[1].execute("""SELECT date, emotion, action, cause FROM logs WHERE
-    #                     log_date LIKE (?) AND
-    #                     emotion LIKE (?) AND
-    #                     log_action LIKE (?) AND
-    #                     cause LIKE (?)""", (terms.values()))
+    db[1].execute("""SELECT date, emotion, action, cause FROM logs WHERE
+                         log_date LIKE (?) AND
+                         emotion LIKE (?) AND
+                         log_action LIKE (?) AND
+                         cause LIKE (?)""", (terms.values()))
     close_db(db[0])

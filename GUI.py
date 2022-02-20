@@ -1,5 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit
+from PyQt5.QtGui import QPixmap
 import DB
 
 
@@ -7,24 +8,29 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Your Health Journal")
-        self.setGeometry(0, 0, 600, 200)
-        self.setFixedSize(600, 200)
+        self.setGeometry(0, 0, 800, 500)
+        self.setFixedSize(580, 400)
 
-        self.welcome = QLabel(self)
-        self.welcome.setText("Hello, (Username)! Welcome back to your health journal!")
-        self.welcome.resize(400, 50)
-        self.welcome.move(100, 25)
+        #self.welcome = QLabel(self)
+        self.label = QLabel(self)
+        #self.welcome.setText("Hello, (Username)! Welcome back to your health journal!")
+        self.pixmap = QPixmap('small.png')
+        self.label.setPixmap(self.pixmap)
+        self.label.resize(self.pixmap.width(),
+                          self.pixmap.height())
+        #self.welcome.resize(400, 50)
+        #self.welcome.move(100, 25)
 
         self.new_entry = QPushButton(self)
         self.new_entry.setText("New Entry")
         self.new_entry.resize(150, 50)
-        self.new_entry.move(50, 120)
+        self.new_entry.move(50, 340)
         self.new_entry.clicked.connect(self.new_entry_win)
 
         self.check_logs = QPushButton(self)
         self.check_logs.setText("Check Logs")
         self.check_logs.resize(150, 50)
-        self.check_logs.move(400, 120)
+        self.check_logs.move(400, 340)
         self.check_logs.clicked.connect(self.new_log_win)
 
         self.show()
