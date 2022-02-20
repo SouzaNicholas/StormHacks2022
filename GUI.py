@@ -2,6 +2,7 @@ import PyQt5.QtCore
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit, \
     QInputDialog, QWidget, QFormLayout, QGridLayout
+from PyQt5.QtGui import *
 import DB
 from os.path import exists
 from datetime import date
@@ -11,8 +12,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setGeometry(0, 0, 600, 200)
-        self.setFixedSize(600, 200)
+        self.setGeometry(0, 0, 600, 500)
+        self.setFixedSize(600, 500)
 
         if not exists("name.txt"):
             self.change_name_win()
@@ -21,16 +22,48 @@ class MainWindow(QMainWindow):
         self.name_string = self.username.readline()
 
         self.setWindowTitle(self.name_string + "\'s Health Journal")
+        self.white = QLabel(self)
+        self.pixwhite = QPixmap('white.png')
 
+        # adding image to label
+        self.white.setPixmap(self.pixwhite)
+
+        # Optional, resize label to image size
+        self.white.resize(self.pixwhite.width(),
+                                   self.pixwhite.height())
         self.welcome = QLabel(self)
-        self.welcome.setText("Hello, " + self.name_string + "! Welcome back to your health journal!")
+        self.welcome.setText("Hello, " + self.name_string + "! Welcome back!")
         self.welcome.resize(400, 50)
-        self.welcome.move(100, 25)
+        self.welcome.move(15, 30)
+        self.welcome.setFont(QFont('Helvetica', 15))
+        self.Health_Journal = QLabel(self)
+        # loading image
+        self.pixmap = QPixmap('small.png')
 
+        # adding image to label
+        self.Health_Journal.setPixmap(self.pixmap)
+
+        # Optional, resize label to image size
+        self.Health_Journal.resize(self.pixmap.width(),
+                          self.pixmap.height())
+        self.Health_Journal.move(-35, 0)
+        self.blue = QLabel(self)
+        # loading image
+        self.pixmap2 = QPixmap('blue.png')
+
+        # adding image to label
+        self.blue.setPixmap(self.pixmap2)
+
+        # Optional, resize label to image size
+        self.blue.resize(self.pixmap2.width(),
+                                   self.pixmap2.height())
+        self.blue.move(0, 230)
         self.new_entry = QPushButton(self)
         self.new_entry.setText("New Entry")
         self.new_entry.resize(150, 50)
-        self.new_entry.move(50, 120)
+        self.new_entry.move(50, 420)
+        self.new_entry.setFont(QFont('Times', 18))
+        self.new_entry.setStyleSheet("background-color : cyan")
         self.new_entry.clicked.connect(self.new_entry_win)
 
         self.check_logs = QPushButton(self)
@@ -42,7 +75,7 @@ class MainWindow(QMainWindow):
         self.change_name = QPushButton(self)
         self.change_name.setText("Change Name")
         self.change_name.resize(150, 50)
-        self.change_name.move(225, 120)
+        self.change_name.move(225, 400)
         self.change_name.clicked.connect(self.change_name_win)
 
         self.show()
@@ -62,6 +95,7 @@ class MainWindow(QMainWindow):
             name_file = open("name.txt", "w+")
             name_file.write(name)
             name_file.close()
+
 
 
 class EntryWindow(QMainWindow):
