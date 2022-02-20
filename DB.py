@@ -48,5 +48,4 @@ def query_db(terms: dict):
                                            '%' + terms['Emotion'] + '%',
                                            '%' + terms['Action'] + '%',
                                            '%' + terms['Cause'] + '%'))
-    print(results.fetchall())
-    close_db(db[0])
+    return results.fetchall()

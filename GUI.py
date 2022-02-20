@@ -189,8 +189,6 @@ class LogWindow(QMainWindow):
 
     # Will open new window to show records
     def submit(self):
-        # TODO: perform SQLite call to fetch requested records
-
         self.popup = ResultWindow(self.package_terms())
         self.popup.show()
 
@@ -224,18 +222,19 @@ class ResultWindow(QWidget):
         self.records = DB.query_db(terms)
         self.layout = QFormLayout()
 
-        self.date = QLabel(self)
-        self.emotion = QLabel(self)
-        self.cause = QLabel(self)
-        self.action = QLabel(self)
+        for row in self.records:
+            self.date = QLabel(self)
+            self.emotion = QLabel(self)
+            self.cause = QLabel(self)
+            self.action = QLabel(self)
 
-        self.date.setText("2/19/2022")
-        self.emotion.setText("Placeholder Emotion")
-        self.cause.setText("Placeholder Cause")
-        self.action.setText("This will probably be a large paragraph")
+            self.date.setText(row[0])
+            self.emotion.setText(row[1])
+            self.cause.setText(row[2])
+            self.action.setText(row[3])
 
-        self.layout.addRow(self.date, self.emotion)
-        self.layout.addRow(self.cause, self.action)
+            self.layout.addRow(self.date, self.emotion)
+            self.layout.addRow(self.cause, self.action)
 
         # necessary to apply the layout to the window
         self.setLayout(self.layout)
