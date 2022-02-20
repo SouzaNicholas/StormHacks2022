@@ -11,16 +11,15 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Your Health Journal")
-        self.setGeometry(0, 0, 600, 200)
-        self.setFixedSize(600, 200)
-
-        file_exists = exists("name.txt")
-        if not file_exists:
+        if not exists("name.txt"):
             self.change_name_win()
 
         self.username = open("name.txt", "r")
         self.name_string = self.username.readline()
+
+        self.setWindowTitle(self.name_string + "\'s Health Journal")
+        self.setGeometry(0, 0, 600, 200)
+        self.setFixedSize(600, 200)
 
         self.welcome = QLabel(self)
         self.welcome.setText("Hello, " + self.name_string + "! Welcome back to your health journal!")
