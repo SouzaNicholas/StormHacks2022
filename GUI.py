@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QCom
     QInputDialog, QWidget, QFormLayout, QGridLayout
 import DB
 from os.path import exists
+from datetime import date
 
 
 class MainWindow(QMainWindow):
@@ -115,12 +116,13 @@ class EntryWindow(QMainWindow):
             raw = e.read()
         return raw.split(",")
 
-    # Pushed log entry to database and clears fields
+    # Pushes log entry to database and clears fields
     def submit(self):
-        # TODO: SQLite Insert command
-
+        entries: tuple = (date.today(), self.emotions.currentText(), self.action_field.toPlainText(),
+                          self.cause_field.toPlainText())
         self.action_field.clear()
         self.cause_field.clear()
+        DB.submit_entry(entries)
 
     # Closes window
     def exit(self):
@@ -192,6 +194,7 @@ class LogWindow(QMainWindow):
         self.popup = ResultWindow(self.package_terms())
         self.popup.show()
 
+        # Empties the fields once the data is used.
         self.date_field.clear()
         self.emotion_field.clear()
         self.action_field.clear()
@@ -201,6 +204,7 @@ class LogWindow(QMainWindow):
     def exit(self):
         self.close()
 
+    # Grabs user input from text fields and packs them into a dict
     def package_terms(self) -> dict:
         terms = {
             "Date": self.date_field.text(),

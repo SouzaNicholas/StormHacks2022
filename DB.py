@@ -13,7 +13,7 @@ def close_db(conn: sql.Connection):
     conn.close()
 
 
-# submits entry into database, entry must be converted to tuple before passing into function
+# submits entry into database
 def submit_entry(entry: tuple):
     db = open_db()
     conn = db[0]
