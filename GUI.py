@@ -273,12 +273,16 @@ class LogWindow(QMainWindow):
         self.submit_button.move(100, 400)
         self.submit_button.resize(100, 50)
         self.submit_button.setText("Submit")
+        self.submit_button.setFont(QFont('Times', 22))
+        self.submit_button.setStyleSheet("background-color : pink")
         self.submit_button.clicked.connect(self.submit)
 
         self.cancel_button = QPushButton(self)
         self.cancel_button.move(400, 400)
         self.cancel_button.resize(100, 50)
         self.cancel_button.setText("Cancel")
+        self.cancel_button.setFont(QFont('Times', 22))
+        self.cancel_button.setStyleSheet("background-color : pink")
         self.cancel_button.clicked.connect(self.exit)
 
     # Will open new window to show records
@@ -309,6 +313,8 @@ class LogWindow(QMainWindow):
 
 class ResultWindow(QWidget):
     # Window needs to dynamically populate with entries from SQL database
+    def exit(self):
+        self.close()
     def __init__(self, terms: dict):
         super().__init__()
         self.setWindowTitle("Results")
@@ -337,6 +343,13 @@ class ResultWindow(QWidget):
         self.blue2.resize(self.pixmap2.width(),
                           self.pixmap2.height())
         self.blue2.move(0, -250)
+        self.cancel_button = QPushButton(self)
+        self.cancel_button.move(250, 440)
+        self.cancel_button.resize(100, 50)
+        self.cancel_button.setText("Cancel")
+        self.cancel_button.setFont(QFont('Times', 22))
+        self.cancel_button.setStyleSheet("background-color : pink")
+        self.cancel_button.clicked.connect(self.exit)
 
         for row in self.records:
             self.date = QLabel(self)
